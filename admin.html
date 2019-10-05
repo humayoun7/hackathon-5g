@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Admin</title>
+  </head>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
+    <script>
+    const socket = io()
+  
+    socket.on('users-updated', function(users){
+        console.log('users-updated', users)
+        updateUsers(users)
+    })
+
+    function updateUsers(users){
+        $.each(
+            users ,
+            function(i,user) {
+                $("#user-list").append("<li>" + user + "</li>") ;
+            }
+        ) ;
+    }
+
+    </script>
+  <body>
+    <h1>Users</h1>
+    <ol id ="user-list"></ol>
+  </body>
+</html>
