@@ -39,15 +39,12 @@ app.get('/admin', (req, res)=>{
 })
 
 app.post('/pushcontent', (req,res) => {
-  
   const {imageUrl, deviceNames} = req.body
   let imageName = imageUrl.split("/images/")[1]
   let data = {
     name:imageName
   }
-  console.log('/pushcontent::', userMap)
   userMap.forEach((value,key,map)=>{
-    console.log('inside userMap',key,value)
     if(deviceNames.indexOf(value.deviceName)>-1){
       io.to(`${key}`).emit('newContent', data)
     }
@@ -103,14 +100,6 @@ io.on('connection',(socket) => {
     userIds.push(socket.id)
     console.log('updated UserIds',userIds)
     io.emit('users-updated', userIds)
-
-    // sendImage(socket, './img1.jpeg')
-    // setTimeout(() => {
-    //     sendImage(socket, './img2.jpeg')
-    // }, 5000);
-    // sendVideo(socket,'./vid.mp4')
-    
-
 
     // for disconnection
     socket.on('disconnect', function(){
